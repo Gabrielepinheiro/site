@@ -162,7 +162,8 @@ def estatico(saidas, destino):
             (destino / 'estilo.css').write_text(css, encoding='utf8')
         cab_fim = html.index('</head>')
         cab = re.sub(r'<style>.*?</style>\s*', '', html[:cab_fim], flags=re.S)
-        html = cab + '<link rel="stylesheet" href="/estilo.css">\n' + html[cab_fim:]
+        # impede que o script que a hospedagem do Wix injeta guarde dados no aparelho ou chame a API (sem cookies, sem banner)
+        html = cab + '<script>window.wixSiteScript = true;</script>\n<link rel="stylesheet" href="/estilo.css">\n' + html[cab_fim:]
         html = html.replace('href="' + SITE + '/', 'href="/').replace('"' + SITE + '/impressum"', '"/impressum"').replace('"' + SITE + '/datenschutz"', '"/datenschutz"')
         for pg in ('sobre-mim', 'diagnostico-da-casa', 'consultoria', 'impressum', 'datenschutz'):
             html = html.replace(f'href="/{pg}"', f'href="/{pg}.html"').replace(f'"/{pg}"', f'"/{pg}.html"')

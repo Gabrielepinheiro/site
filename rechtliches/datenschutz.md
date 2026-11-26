@@ -40,7 +40,7 @@ Diese Daten sind technisch erforderlich, um die Website anzuzeigen und ihre Sich
 
 ## 5. Cookies und Einwilligung
 
-Die Website setzt technisch notwendige Cookies, die für den Betrieb erforderlich sind (§ 25 Abs. 2 TDDDG, Art. 6 Abs. 1 lit. f DSGVO). Andere Cookies, etwa für Statistik, werden nur mit Ihrer Einwilligung gesetzt (§ 25 Abs. 1 TDDDG, Art. 6 Abs. 1 lit. a DSGVO). Ihre Auswahl können Sie über den Cookie-Banner treffen und jederzeit mit Wirkung für die Zukunft ändern.
+Der Hoster setzt ausschließlich technisch notwendige Cookies, die für die Sicherheit und die Auslieferung der Website erforderlich sind, zum Beispiel zum Schutz vor automatisierten Angriffen (§ 25 Abs. 2 Nr. 2 TDDDG, Art. 6 Abs. 1 lit. f DSGVO). Cookies oder ähnliche Technologien für Statistik, Marketing oder Tracking werden auf dieser Website nicht eingesetzt. Deshalb ist keine Einwilligung erforderlich und es wird kein Cookie-Banner angezeigt.
 
 ## 6. Schriftarten
 
