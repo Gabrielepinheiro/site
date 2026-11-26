@@ -19,3 +19,8 @@ No fim do `index.html`, o bloco `GP_CONFIG` guarda os links. Campo vazio = item 
 - `linkDiagnostico`, `pedeSenha`, `instagram`, `portfolio`, `premier`, `foto`
 - `impressum` e `privacidade`: obrigatórios na Alemanha
 - `whatsapp`: só depois de confirmar o número oficial
+
+## Impressum e Datenschutz
+
+Os textos estão em `rechtliches/`. No Wix, crie duas páginas de texto com os endereços `/impressum` e `/datenschutz` e cole cada texto. O rodapé do site já aponta para elas.
+As fontes estão embutidas no `index.html`, então o site não chama os servidores do Google.
