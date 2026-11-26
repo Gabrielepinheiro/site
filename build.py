@@ -164,9 +164,10 @@ def estatico(saidas, destino):
         cab = re.sub(r'<style>.*?</style>\s*', '', html[:cab_fim], flags=re.S)
         html = cab + '<link rel="stylesheet" href="/estilo.css">\n' + html[cab_fim:]
         html = html.replace('href="' + SITE + '/', 'href="/').replace('"' + SITE + '/impressum"', '"/impressum"').replace('"' + SITE + '/datenschutz"', '"/datenschutz"')
-        pasta = destino / pastas[chave]
-        pasta.mkdir(parents=True, exist_ok=True)
-        (pasta / 'index.html').write_text(html, encoding='utf8')
+        for pg in ('sobre-mim', 'diagnostico-da-casa', 'consultoria', 'impressum', 'datenschutz'):
+            html = html.replace(f'href="/{pg}"', f'href="/{pg}.html"').replace(f'"/{pg}"', f'"/{pg}.html"')
+        nome = (pastas[chave] or 'index') + '.html'
+        (destino / nome).write_text(html, encoding='utf8')
 
 
 def main():
