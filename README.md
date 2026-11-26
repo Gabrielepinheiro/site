@@ -1,6 +1,6 @@
 # Site · gabrielepinheiro.com
 
-Página principal do site da Gabriele Pinheiro, arquiteta brasileira e interior designer.
+Página principal do site da Gabriele Pinheiro, interior designer.
 Segue o Brand Book GP (nov/2026): Branco, Névoa, Cacau, Bordô e Antúrio; Instrument Serif, Hanken Grotesk, Reenie Beanie e Tinos.
 
 - `index.html`: o site inteiro em um arquivo só (texto, estilo e movimento).
