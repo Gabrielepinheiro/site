@@ -138,6 +138,37 @@ def pagina(t_home, chave):
     return f'{cabeca}<body>\n{menu(chave)}\n\n{corpo}\n{rodape}\n\n{config}\n{COMUM}\n</body>\n</html>\n'
 
 
+def estatico(saidas, destino):
+    """Site de verdade (sem Embed): pastas com index.html, estilo e fontes em arquivos próprios, links internos relativos."""
+    import base64
+    destino.mkdir(parents=True, exist_ok=True)
+    (destino / 'fonts').mkdir(exist_ok=True)
+    pastas = {'home': '', 'sobre': 'sobre-mim', 'diagnostico': 'diagnostico-da-casa', 'consultoria': 'consultoria',
+              'impressum': 'impressum', 'datenschutz': 'datenschutz'}
+    css = None
+    for chave, html in saidas.items():
+        estilos = re.findall(r'<style>(.*?)</style>', html[:html.index('</head>')], re.S)
+        if css is None:
+            css = '\n'.join(estilos)
+            def fonte(m):
+                familia = re.search(r"font-family: '([^']+)'", m.group(0)).group(1)
+                estilo = re.search(r'font-style: (\w+)', m.group(0)).group(1)
+                peso = re.search(r'font-weight: ([0-9]+)', m.group(0)).group(1)
+                nome = f"{familia.lower().replace(' ', '-')}-{estilo}-{peso}.woff2"
+                (destino / 'fonts' / nome).write_bytes(base64.b64decode(m.group(1)))
+                return m.group(0).replace(f'data:font/woff2;base64,{m.group(1)}', f'/fonts/{nome}')
+            css = re.sub(r'@font-face\s*\{[^}]*?data:font/woff2;base64,([A-Za-z0-9+/=]+)[^}]*\}', fonte, css)
+            assert 'base64' not in css
+            (destino / 'estilo.css').write_text(css, encoding='utf8')
+        cab_fim = html.index('</head>')
+        cab = re.sub(r'<style>.*?</style>\s*', '', html[:cab_fim], flags=re.S)
+        html = cab + '<link rel="stylesheet" href="/estilo.css">\n' + html[cab_fim:]
+        html = html.replace('href="' + SITE + '/', 'href="/').replace('"' + SITE + '/impressum"', '"/impressum"').replace('"' + SITE + '/datenschutz"', '"/datenschutz"')
+        pasta = destino / pastas[chave]
+        pasta.mkdir(parents=True, exist_ok=True)
+        (pasta / 'index.html').write_text(html, encoding='utf8')
+
+
 def main():
     t_home = home()
     saidas = {'home': t_home}
@@ -159,6 +190,8 @@ def main():
         cab = re.sub(r'<meta charset[^>]*>\s*|<meta name="viewport"[^>]*>\s*', '', cab)
         corpo = re.search(r'<body>(.*)</body>', h, re.S).group(1)
         (destino / 'index-previa.html').write_text(cab + corpo, encoding='utf8')
+    if '--estatico' in sys.argv:
+        estatico(saidas, Path(sys.argv[sys.argv.index('--estatico') + 1]))
     print('ok')
 
 

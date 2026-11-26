@@ -44,7 +44,7 @@ Die Website setzt technisch notwendige Cookies, die für den Betrieb erforderlic
 
 ## 6. Schriftarten
 
-Die Schriftarten dieser Website sind direkt in die Seite eingebunden. Beim Laden der Schriften wird keine Verbindung zu Servern Dritter, etwa von Google, hergestellt.
+Die Schriftarten dieser Website liegen auf demselben Server wie die Website selbst und werden von dort geladen. Beim Laden der Schriften wird keine Verbindung zu Servern Dritter, etwa von Google, hergestellt.
 
 ## 7. Kontakt per E-Mail
 
