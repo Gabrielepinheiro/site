@@ -25,9 +25,9 @@ PAGINAS = {
                   'titulo': 'Impressum · Gabriele Pinheiro', 'descricao': 'Impressum von Gabriele Pinheiro, Interior designer.'},
     'datenschutz': {'arquivo': 'datenschutz.html', 'url': SITE + '/datenschutz', 'menu': None, 'md': 'rechtliches/datenschutz.md',
                     'titulo': 'Datenschutzerklärung · Gabriele Pinheiro', 'descricao': 'Datenschutzerklärung von Gabriele Pinheiro, Interior designer.'},
-    'consultoria': {'arquivo': 'consultoria.html', 'url': SITE + '/consultoria', 'menu': 'Consultoria',
-                    'titulo': 'Consultoria · Gabriele Pinheiro',
-                    'descricao': 'Como funciona a consultoria de design de interiores online: caminhos, projetos, etapas e prazos.'},
+    'consultoria': {'arquivo': 'projetos.html', 'url': SITE + '/projetos', 'menu': 'Projetos',
+                    'titulo': 'Projetos · Gabriele Pinheiro',
+                    'descricao': 'Como funcionam os projetos de design de interiores online: caminhos, o que cada projeto inclui, etapas e prazos.'},
 }
 
 COMUM = '''<script id="js-comum">
@@ -143,7 +143,7 @@ def estatico(saidas, destino):
     import base64
     destino.mkdir(parents=True, exist_ok=True)
     (destino / 'fonts').mkdir(exist_ok=True)
-    pastas = {'home': '', 'sobre': 'sobre-mim', 'diagnostico': 'diagnostico-da-casa', 'consultoria': 'consultoria',
+    pastas = {'home': '', 'sobre': 'sobre-mim', 'diagnostico': 'diagnostico-da-casa', 'consultoria': 'projetos',
               'impressum': 'impressum', 'datenschutz': 'datenschutz'}
     css = None
     for chave, html in saidas.items():
@@ -165,7 +165,7 @@ def estatico(saidas, destino):
         # impede que o script que a hospedagem do Wix injeta guarde dados no aparelho ou chame a API (sem cookies, sem banner)
         html = cab + '<script>window.wixSiteScript = true;</script>\n<link rel="stylesheet" href="/estilo.css">\n' + html[cab_fim:]
         html = html.replace('href="' + SITE + '/', 'href="/').replace('"' + SITE + '/impressum"', '"/impressum"').replace('"' + SITE + '/datenschutz"', '"/datenschutz"')
-        for pg in ('sobre-mim', 'diagnostico-da-casa', 'consultoria', 'impressum', 'datenschutz'):
+        for pg in ('sobre-mim', 'diagnostico-da-casa', 'projetos', 'impressum', 'datenschutz'):
             html = html.replace(f'href="/{pg}"', f'href="/{pg}.html"').replace(f'"/{pg}"', f'"/{pg}.html"')
         nome = (pastas[chave] or 'index') + '.html'
         (destino / nome).write_text(html, encoding='utf8')
@@ -181,7 +181,7 @@ def main():
     if '--previa' in sys.argv:
         destino = Path(sys.argv[sys.argv.index('--previa') + 1])
         destino.mkdir(parents=True, exist_ok=True)
-        mapa = {'home': 'home.html', 'sobre': 'sobre-mim.html', 'diagnostico': 'diagnostico-da-casa.html', 'consultoria': 'consultoria.html', 'impressum': 'impressum.html', 'datenschutz': 'datenschutz.html'}
+        mapa = {'home': 'home.html', 'sobre': 'sobre-mim.html', 'diagnostico': 'diagnostico-da-casa.html', 'consultoria': 'projetos.html', 'impressum': 'impressum.html', 'datenschutz': 'datenschutz.html'}
         js = 'window.GP_CONFIG.previa = ' + str(mapa).replace("'", '"') + '; window.GP_CONFIG.impressum = "impressum.html"; window.GP_CONFIG.privacidade = "datenschutz.html";'
         for chave, html in saidas.items():
             html = html.replace('\n</script>\n<script id="js-comum">', '\n' + js + '\n</script>\n<script id="js-comum">', 1)
@@ -193,7 +193,10 @@ def main():
         corpo = re.search(r'<body>(.*)</body>', h, re.S).group(1)
         (destino / 'index-previa.html').write_text(cab + corpo, encoding='utf8')
     if '--estatico' in sys.argv:
-        estatico(saidas, Path(sys.argv[sys.argv.index('--estatico') + 1]))
+        d = Path(sys.argv[sys.argv.index('--estatico') + 1])
+        estatico(saidas, d)
+        # endereço antigo da página de projetos continua funcionando
+        (d / 'consultoria.html').write_text('<!doctype html><meta charset="utf-8"><title>Projetos · Gabriele Pinheiro</title><meta name="robots" content="noindex"><link rel="canonical" href="/projetos.html"><meta http-equiv="refresh" content="0; url=/projetos.html"><a href="/projetos.html">Projetos</a>\n', encoding='utf8')
     print('ok')
 
 
