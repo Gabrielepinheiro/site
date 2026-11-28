@@ -28,6 +28,7 @@ PAGINAS = {
     'consultoria': {'arquivo': 'projetos.html', 'url': SITE + '/projetos', 'menu': 'Projetos',
                     'titulo': 'Projetos · Gabriele Pinheiro',
                     'descricao': 'Como funcionam os projetos de design de interiores online: caminhos, o que cada projeto inclui, etapas e prazos.'},
+    'curadoria': {'url': 'https://curadoria.gabrielepinheiro.com/vendas.html', 'menu': 'Curadoria'},
 }
 
 COMUM = '''<script id="js-comum">
